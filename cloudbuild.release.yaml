@@ -1,0 +1,25 @@
+steps:
+- name: 'alpine:latest'
+  args: ['rm', '-rf', './node_modules'] # node_modules can be incorrect if running cloud-build-local
+
+- name: 'gcr.io/cloud-builders/npm'
+  env: ['CI=true']
+  args: ['install', '--quiet']
+
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'test:unit']
+
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['run', 'build']
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', '--no-promote', '--version=$BUILD_ID']
+
+- name: 'cypress/base:8'
+  entrypoint: 'bash'
+  args: [ '-c',
+    '$(npm bin)/cypress run --config baseUrl=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com'
+  ]
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'services', 'set-traffic', 'default', '--splits', '$BUILD_ID=1']

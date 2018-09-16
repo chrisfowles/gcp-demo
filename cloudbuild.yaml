@@ -13,7 +13,7 @@ steps:
   args: ['run', 'build']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['app', 'deploy', '--nopromote', '--version=$BUILD_ID']
+  args: ['app', 'deploy', '--no-promote', '--version=$BUILD_ID']
 
 - name: 'npm'
   entrypoint: 'npx'

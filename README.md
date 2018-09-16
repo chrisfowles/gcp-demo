@@ -1,5 +1,7 @@
 # gcp-demo
 
+Demo repo for Google Cloud Summit
+
 ## Project setup
 ```
 npm install

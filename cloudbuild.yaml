@@ -15,13 +15,13 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--no-promote', '--version=$BUILD_ID']
 
-- name: 'npm'
+- name: 'gcr.io/cloud-builders/npm'
   entrypoint: 'npx'
   args: [
     'cypress', 
     'run',
     '--config',
-    'baseUrl=https://$BUILD_ID.default.$PROJECT_ID.appspot.com'
+    'baseUrl=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com'
   ]
 
 - name: 'gcr.io/cloud-builders/gcloud'

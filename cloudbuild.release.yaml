@@ -15,11 +15,9 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--no-promote', '--version=$BUILD_ID']
 
-- name: 'cypress/base:8'
-  entrypoint: 'bash'
-  args: [ '-c',
-    '$(npm bin)/cypress run --config baseUrl=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com'
-  ]
+- name: 'gcr.io/cloud-builders/npm'
+  entrypoint: 'npx'
+  args: ['vue-cli-service', 'test:e2e', '--headless', '--url=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com']
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'services', 'set-traffic', 'default', '--splits', '$BUILD_ID=1']

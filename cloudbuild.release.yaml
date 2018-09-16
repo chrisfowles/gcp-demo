@@ -1,6 +1,4 @@
 steps:
-- name: 'alpine:latest'
-  args: ['rm', '-rf', './node_modules'] # node_modules can be incorrect if running cloud-build-local
 
 - name: 'gcr.io/cloud-builders/npm'
   env: ['CI=true']

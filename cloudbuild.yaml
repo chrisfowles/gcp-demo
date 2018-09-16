@@ -2,18 +2,9 @@ steps:
 - name: 'alpine:latest'
   args: ['rm', '-rf', './node_modules'] # node_modules can be incorrect if running cloud-build-local
 
-# - name: 'gcr.io/cloud-builders/gsutil'
-#   entrypoint: '/bin/bash'
-#   args: [ '-c', 'gsutil cp -q -RZ gs://${_DEPSBUCKET}/node_modules ./node_modules || true' ] # fails on first run
-
 - name: 'gcr.io/cloud-builders/npm'
-  env: [
-    'CI=true'
-  ]
+  env: ['CI=true']
   args: ['install', '--quiet']
-
-# - name: gcr.io/cloud-builders/gsutil
-#   args: ['cp', '-q', '-RZ', './node_modules', 'gs://${_DEPSBUCKET}/node_modules'] # cache npm deps
 
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test:unit']

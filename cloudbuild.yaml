@@ -1,8 +1,44 @@
 steps:
 
+# Get the saved global npm cache from
+# Google Cloud Storage if it exists.
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    if gsutil -q stat gs://${PROJECT_ID}_cloudbuild/npm_cache.tar.gz; then
+      cd /
+      gsutil cp gs://${PROJECT_ID}_cloudbuild/npm_cache.tar.gz npm_cache.tar.gz
+      tar -xpzf npm_cache.tar.gz
+    fi
+  volumes:
+  - name: 'npm_cache'
+    path: /builder/home/.npm
+
 - name: 'gcr.io/cloud-builders/npm'
   env: ['CI=true']
   args: ['install', '--quiet']
+  volumes:
+  - name: 'npm_cache'
+    path: /builder/home/.npm
+
+# Save the global npm cache to Google Cloud Storage
+- name: 'gcr.io/cloud-builders/gsutil'
+  entrypoint: 'sh'
+  args:
+    - '-c'
+    - |
+      echo 'Creating an archive of /builder/home/.npm directory'
+      tar -cpzf npm_cache.tar.gz /builder/home/.npm/
+      echo 'Saving archive to Cloud Storage'
+      gsutil cp npm_cache.tar.gz gs://${PROJECT_ID}_cloudbuild/npm_cache.tar.gz
+      # Cleaning up
+      echo 'Deleting npm_cache.tar.gz'
+      rm -f npm_cache.tar.gz
+  volumes:
+    - name: 'npm_cache'
+      path: /builder/home/.npm
 
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'lint']

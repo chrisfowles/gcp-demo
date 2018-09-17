@@ -38,7 +38,7 @@ steps:
       rm -f npm_cache.tar.gz
   volumes:
   - name: 'npm_cache'
-      path: /root/.npm
+    path: /root/.npm
 
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test:unit']

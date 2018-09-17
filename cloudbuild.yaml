@@ -14,14 +14,14 @@ steps:
     fi
   volumes:
   - name: 'npm_cache'
-    path: /root/.npm
+    path: /builder/home/.npm
 
 - name: 'gcr.io/cloud-builders/npm'
   env: ['CI=true']
   args: ['install', '--quiet']
   volumes:
   - name: 'npm_cache'
-    path: /root/.npm
+    path: /builder/home/.npm
 
 # Save the global npm cache to Google Cloud Storage
 - name: 'gcr.io/cloud-builders/gsutil'
@@ -29,8 +29,8 @@ steps:
   args:
     - '-c'
     - |
-      echo 'Creating an archive of /root/.npm directory'
-      tar -cpzf npm_cache.tar.gz /root/.npm/
+      echo 'Creating an archive of /builder/home/.npm directory'
+      tar -cpzf npm_cache.tar.gz /builder/home/.npm/
       echo 'Saving archive to Cloud Storage'
       gsutil cp npm_cache.tar.gz gs://${PROJECT_ID}_cloudbuild/npm_cache.tar.gz
       # Cleaning up
@@ -38,7 +38,7 @@ steps:
       rm -f npm_cache.tar.gz
   volumes:
     - name: 'npm_cache'
-      path: /root/.npm
+      path: /builder/home/.npm
 
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'lint']

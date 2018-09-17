@@ -36,9 +36,9 @@ steps:
       # Cleaning up
       echo 'Deleting npm_cache.tar.gz'
       rm -f npm_cache.tar.gz
-volumes:
-  - name: 'npm_cache'
-    path: /root/.npm
+  volumes:
+    - name: 'npm_cache'
+      path: /root/.npm
 
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'lint']

@@ -52,7 +52,8 @@ steps:
 - name: 'cypress/base:8'
   entrypoint: 'bash'
   env: [
-    'CYPRESS_RECORD_KEY=${_CYPRESS_RECORD_KEY}'
+    'CYPRESS_RECORD_KEY=${_CYPRESS_RECORD_KEY}',
+    'CYPRESS_PROJECT_ID=${_CYPRESS_PROJECT_ID}'
   ]
   args: [ '-c',
     '$(npm bin)/cypress run --record --config baseUrl=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com'
@@ -63,3 +64,4 @@ steps:
 
 substitutions:
   _CYPRESS_RECORD_KEY: 9ff1630d-679e-4ca8-9284-75609a237817
+  _CYPRESS_PROJECT_ID: 5orsjx

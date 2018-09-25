@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Google Cloud logo" src="./assets/google-cloud.png">
-    <HelloWorld msg="Hello Google Summit"/>
+    <HelloWorld msg="Hello Google Cloud Summit 2018"/>
   </div>
 </template>
 

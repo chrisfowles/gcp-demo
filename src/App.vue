@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img alt="Google Cloud logo" src="./assets/google-cloud.png">
-    <HelloWorld msg="Hello Google Cloud Summit 2018"/>
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js Site"/>
   </div>
 </template>
 

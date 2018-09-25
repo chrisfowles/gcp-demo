@@ -51,9 +51,15 @@ steps:
 
 - name: 'cypress/base:8'
   entrypoint: 'bash'
+  env: [
+    'CYPRESS_RECORD_KEY=${_CYPRESS_RECORD_KEY}'
+  ]
   args: [ '-c',
-    '$(npm bin)/cypress run --config baseUrl=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com'
+    '$(npm bin)/cypress run --record --config baseUrl=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com'
   ]
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'services', 'set-traffic', 'default', '--splits', '$BUILD_ID=1']
+
+substitutions:
+  _CYPRESS_RECORD_KEY: 9ff1630d-679e-4ca8-9284-75609a237817

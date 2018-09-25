@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <img alt="Google Cloud logo" src="./assets/google-cloud.png">
+    <img alt="Google Cloud logo" src="./assets/googlecloud.png">
     <HelloWorld msg="Hello Google Cloud Summit 2018"/>
+    <img class="logo-small" alt="Google Cloud Build logo" src="./assets/cloudbuild.png">
+    <img class="logo-small" alt="Octocat logo" src="./assets/octocat.png">
+    <img class="logo-small" alt="Google App Engine logo" src="./assets/appengine.png">
   </div>
 </template>
 
@@ -24,5 +27,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.logo-small {
+  height: 140px;
 }
 </style>

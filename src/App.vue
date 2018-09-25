@@ -3,14 +3,15 @@
     <img alt="Google Cloud logo" src="./assets/googlecloud.png">
     <HelloWorld msg="Hello Google Cloud Summit 2018"/>
     <div class="logos">
-      <img class="logo-small" alt="Google Cloud Build logo" src="./assets/cloudbuild.png">
-      <img class="logo-small" alt="Octocat logo" src="./assets/octocat.png">
-      <img class="logo-small" alt="Google App Engine logo" src="./assets/appengine.png">
+      <img data-cy="logo-sm-cloudbuild" class="logo-small" alt="Google Cloud Build logo" src="./assets/cloudbuild.png">
+      <img data-cy="logo-sm-octocat" class="logo-small" alt="Octocat logo" src="./assets/octocat.png">
+      <img data-cy="logo-sm-appengine" class="logo-small" alt="Google App Engine logo" src="./assets/appengine.png">
     </div>
     <div>
-      <p>https://github.com/marketplace/google-cloud-build</p>
-      <p>https://github.com/chrisfowles/gcp-demo</p>
-      <p>https://www.cypress.io</p>
+      <p class="reference-link">https://github.com/marketplace/google-cloud-build</p>
+      <p class="reference-link">https://github.com/chrisfowles/gcp-demo</p>
+      <p class="reference-link">https://www.cypress.io</p>
+      <p class="reference-link">https://vuejs.org</p>
     </div>
   </div>
 </template>
@@ -34,6 +35,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.reference-link {
+  font-size: larger;
 }
 
 .logo-small {

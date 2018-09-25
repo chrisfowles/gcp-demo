@@ -1,7 +1,6 @@
 steps:
 
-# Get the saved global npm cache from
-# Google Cloud Storage if it exists.
+# Get the saved global npm cache from Google Cloud Storage
 - name: 'gcr.io/cloud-builders/gsutil'
   entrypoint: 'sh'
   args:
@@ -16,6 +15,7 @@ steps:
   - name: 'npm_cache'
     path: /root/.npm
 
+# Install npm modules
 - name: 'gcr.io/cloud-builders/npm'
   env: ['CI=true']
   args: ['install', '--quiet']
@@ -40,15 +40,19 @@ steps:
   - name: 'npm_cache'
     path: /root/.npm
 
+# Run unit tests
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'test:unit']
 
+# Build for production
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run', 'build']
 
+# Deploy to App Engine (do not promote)
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '--no-promote', '--version=$BUILD_ID']
 
+# Run end to end testing
 - name: 'cypress/base:8'
   entrypoint: 'bash'
   env: [
@@ -59,5 +63,6 @@ steps:
     '$(npm bin)/cypress run --record --config baseUrl=https://$BUILD_ID-dot-$PROJECT_ID.appspot.com'
   ]
 
+# Promote to live version
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'services', 'set-traffic', 'default', '--splits', '$BUILD_ID=1']

@@ -61,7 +61,3 @@ steps:
 
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'services', 'set-traffic', 'default', '--splits', '$BUILD_ID=1']
-
-substitutions:
-  _CYPRESS_RECORD_KEY: 9ff1630d-679e-4ca8-9284-75609a237817
-  _CYPRESS_PROJECT_ID: 5orsjx

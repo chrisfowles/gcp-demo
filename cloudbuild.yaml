@@ -18,7 +18,7 @@ steps:
 
 - name: 'gcr.io/cloud-builders/npm'
   env: ['CI=true']
-  args: ['install', '--quiet']
+  args: ['ci']
   volumes:
   - name: 'npm_cache'
     path: /builder/home/.npm
